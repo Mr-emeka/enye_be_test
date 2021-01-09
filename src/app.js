@@ -12,6 +12,13 @@ app.use(bodyParser.json());
 // set port
 const PORT = process.env.PORT || 8080;
 
+// app get /
+app.get(`/`, (req, res) => {
+  res.status(200).send({
+    message: "welcome to test api",
+    error: false,
+  });
+});
 // route to api/rates
 app.get(`/api/rates`, async (req, res) => {
   try {
