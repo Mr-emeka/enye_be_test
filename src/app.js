@@ -24,14 +24,16 @@ app.get(`/api/rates`, async (req, res) => {
   try {
     const { base, currency } = req.query;
     let response;
+    if (!base && !currency)
+      return res.status(400).send({
+        error: true,
+        message: "missing required query base and currency",
+      });
     if (base && currency) {
       response = await axios.get(
         `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${currency}`
       );
-    } else {
-      response = await axios.get(`https://api.exchangeratesapi.io/latest`);
     }
-
     let { data } = response;
     res.status(200).send({
       results: {
